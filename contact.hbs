@@ -1,0 +1,99 @@
+{{!< default}}
+
+{{#post}}
+<article class="post-content {{post_class}} {{#unless feature_image}}no-image{{/unless}}">
+
+    <header class="post-content-header">
+        <h1 class="post-content-title">{{title}}</h1>
+    </header>
+
+    {{#if feature_image}}
+    <div class="post-content-image">
+        <img class="kg-image" src="{{feature_image}}" alt="{{title}}" />
+    </div>
+    {{/if}}
+
+    <div class="post-content-body">
+        {{content}}
+    </div>
+
+<form method="post" action="https://docs.google.com/forms/d/e/1FAIpQLSfkb43u4UIPDVlvoVviEtDiYlfWrew9CNwTB6eB-8Ryj8h1Hw/formResponse"
+      target="_self"
+      id="bootstrapForm"
+      method="POST">
+    <div class="row gtr-uniform">
+        <div class="col-6 col-12-xsmall">
+            <!-- Field type: "short" id: "1633920210" -->
+            <label class="label" for="name"><legend for="1633920210">Name</legend></label>
+            <input id="2005620554" type="text" name="entry.2005620554" class="form-control" value="" placeholder="Name" required>
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <label class="label" for="email"><legend for="1045781291">Email</legend></label>
+            <input id="1045781291" type="email" name="entry.1045781291" class="form-control" value="" placeholder="Email" required>
+        </div>
+        <!-- Break -->
+        <div class="col-6 col-12-xsmall">
+            <label class="label" for="phone"><legend for="1166974658">Phone number</legend></label>
+            <input id="1166974658" type="text" name="entry.1166974658" class="form-control"  value="" placeholder="Phone number" >
+        </div>
+                <div class="col-6 col-12-small">
+            <input type="checkbox" id="demo-human" name="demo-human" checked="">
+            <label for="demo-human">I am a human</label>
+        </div>
+        
+        <!-- Break -->
+        <div class="col-12">
+            <label class="label mt1" for="message"><legend for="1846923513">Messaggio</legend></label>
+            <textarea id="839337160" name="entry.839337160" class="form-control" value="" placeholder="Enter your message"></textarea>
+        </div>
+        
+        <!-- Break -->
+
+        <!-- Break -->
+        <div class="col-12">
+            <ul class="actions">
+                <li><input type="submit" value="Send Message" class="primary"></li>
+                <!-- <li><input type="reset" value="Reset"></li> -->
+            </ul>
+        </div>
+    </div>
+</form>
+
+</article>
+{{/post}}
+
+{{!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs --}}
+{{#contentFor "scripts"}}
+<script>
+    var images = document.querySelectorAll('.kg-gallery-image img');
+    images.forEach(function (image) {
+        var container = image.closest('.kg-gallery-image');
+        var width = image.attributes.width.value;
+        var height = image.attributes.height.value;
+        var ratio = width / height;
+        container.style.flex = ratio + ' 1 0%';
+    })
+</script>
+{{/contentFor}}
+
+
+
+
+
+<script>
+$('#bootstrapForm').submit(function (event) {
+    event.preventDefault()
+    var extraData = {}
+    $('#bootstrapForm').ajaxSubmit({
+        data: extraData,
+        dataType: 'jsonp',  // This won't really work. It's just to use a GET instead of a POST to allow cookies from different domain.
+        error: function () {
+            // Submit of form should be successful but JSONP callback will fail because Google Forms
+            // does not support it, so this is handled as a failure.
+            alert('Form Submitted. Thanks.')
+            // You can also redirect the user to a custom thank-you page:
+            // window.location = 'http://www.mydomain.com/thankyoupage.html'
+        }
+    })
+})
+</script>
